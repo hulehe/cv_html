@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>후젠카이 이력서</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #243044;
+      --muted: #5d6b76;
+      --line: #e3e6ea;
+      --bg: #eef2f5;
+      --card: #ffffff;
+      --green: #0f7a62;
+      --green-soft: #e7f4ef;
+      --sans: "IBM Plex Sans KR", "Noto Sans KR", "Malgun Gothic", sans-serif;
+      --mono: "IBM Plex Mono", ui-monospace, monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      color: var(--ink);
+      background: var(--bg);
+      font-family: var(--sans);
+    }
+    body.talking { overflow: hidden; }
+    a { color: inherit; }
+
+    .wrap { max-width: 880px; margin: 0 auto; padding: 36px 24px 80px; }
+    header.top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 24px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--line);
+    }
+    .kicker {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--green);
+    }
+    header.top h1 {
+      margin: 6px 0 0;
+      font-size: 36px;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--green);
+    }
+    .role { margin: 6px 0 0; font-size: 16px; }
+    .facts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 14px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .facts li {
+      background: var(--green-soft);
+      color: var(--green);
+      border-radius: 999px;
+      padding: 5px 11px;
+      font-size: 14px;
+    }
+    .contact { margin: 12px 0 0; color: var(--muted); font-size: 14px; }
+    button.open {
+      flex: none;
+      font: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      background: var(--green);
+      border: 0;
+      border-radius: 10px;
+      padding: 12px 16px;
+      cursor: pointer;
+    }
+    button.open:hover { filter: brightness(1.05); }
+
+    section.block { margin-top: 36px; }
+    h2 {
+      margin: 0 0 14px;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      color: var(--green);
+      font-weight: 600;
+    }
+    article.job {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px 20px 8px;
+      margin-bottom: 14px;
+    }
+    .job-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: baseline;
+    }
+    .job-head h3 { margin: 0; font-size: 22px; font-weight: 600; }
+    .when {
+      margin: 0;
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .meta { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
+    .proj { margin: 16px 0 18px; padding-top: 14px; border-top: 1px solid var(--line); }
+    .proj h4 { margin: 0; font-size: 16px; font-weight: 600; line-height: 1.4; }
+    ul.clean { margin: 8px 0 0; padding: 0 0 0 1.15em; }
+    ul.clean li { margin: 4px 0; line-height: 1.5; }
+    ul.clean li::marker { color: var(--green); }
+
+    .edu, .paper {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+    }
+    .edu { display: flex; justify-content: space-between; gap: 16px; }
+    .edu strong { font-size: 16px; }
+    .edu p, .paper { margin: 4px 0 0; }
+    .paper { font-size: 15px; line-height: 1.45; }
+    .paper em { font-style: normal; color: var(--muted); }
+    .lang { display: grid; gap: 12px; max-width: 640px; }
+    .lang div { display: grid; grid-template-columns: 72px 1fr auto; gap: 12px; align-items: center; }
+    .bar {
+      height: 8px;
+      border-radius: 99px;
+      background: linear-gradient(90deg, var(--green) var(--p), #e6ebef var(--p));
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tags span {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 14px;
+    }
+
+    #talk {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      background: #e4ebf0;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 20px 28px 18px;
+    }
+    body.talking #talk { display: flex; }
+    .talk-top {
+      width: min(1080px, calc(100vw - 72px), calc((100dvh - 188px) * 16 / 9));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    button.back {
+      font: inherit;
+      font-size: 14px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+    .talk-count { margin: 0; color: var(--muted); font-family: var(--mono); font-size: 13px; }
+    .sheet {
+      width: min(1080px, calc(100vw - 72px), calc((100dvh - 188px) * 16 / 9));
+      aspect-ratio: 16 / 9;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 16px 48px rgba(36, 48, 68, 0.12);
+      padding: 22px 26px 18px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .sheet .kicker { font-size: 12px; }
+    .sheet h2 {
+      margin: 4px 0 0;
+      font-size: clamp(18px, 1.7vw, 26px);
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    .sheet-body {
+      flex: 1;
+      min-height: 0;
+      margin-top: 12px;
+      display: grid;
+      gap: 10px;
+    }
+    .sheet-body.moma {
+      grid-template-columns: 1.15fr 1fr 1fr;
+      grid-template-rows: repeat(3, minmax(0, 1fr));
+    }
+    .sheet-body.moma .video { grid-column: 1; grid-row: 1 / span 3; }
+    .sheet-body.sim {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-rows: minmax(0, 1fr);
+    }
+    .sheet-body.ctrl {
+      grid-template-columns: 1.15fr 1fr;
+      grid-template-rows: repeat(3, minmax(0, 1fr));
+    }
+    .sheet-body.ctrl .video { grid-column: 1; grid-row: 1 / span 3; }
+    .video {
+      position: relative;
+      min-width: 0;
+      min-height: 0;
+      height: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #1c2830;
+    }
+    .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .cell {
+      min-width: 0;
+      min-height: 0;
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 8px;
+    }
+    .cell .tick { width: 28px; height: 4px; border-radius: 99px; background: var(--accent); }
+    .cell b { font-size: clamp(13px, 1.2vw, 16px); font-weight: 600; line-height: 1.4; }
+    .cell.fill { justify-content: flex-start; }
+    .chips {
+      flex: 1;
+      min-height: 0;
+      margin-top: 8px;
+      display: grid;
+      gap: 8px;
+    }
+    .chips.n2 { grid-template-rows: 1fr 1fr; }
+    .chips.n3 { grid-template-rows: 1fr 1fr 1fr; }
+    .chips.n4 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+    .chips > span {
+      min-height: 0;
+      background: rgba(255,255,255,0.78);
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-align: center;
+      font-weight: 600;
+      font-size: clamp(12px, 1.05vw, 15px);
+      padding: 8px;
+    }
+    .chips > span img,
+    .chips > span.textonly b {
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+      max-height: 72%;
+      object-fit: contain;
+    }
+    .chips > span.textonly { container-type: inline-size; }
+    .chips > span.textonly b {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 22cqi;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      color: #243044;
+    }
+    .chips > span em { font-style: normal; }
+    .cite {
+      flex: none;
+      font-style: normal;
+      font-weight: 450;
+      font-size: 10px;
+      line-height: 1.2;
+      color: #5c6b7a;
+    }
+    .cite a { color: #1d6f8a; text-decoration: underline; }
+    .urdf {
+      flex: 1;
+      min-height: 0;
+      margin-top: 4px;
+      background: rgba(255,255,255,0.78);
+      border-radius: 10px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      overflow: hidden;
+    }
+    .urdf .block {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      overflow: hidden;
+    }
+    .urdf .block em {
+      font-style: normal;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #1d6f8a;
+    }
+    .urdf .src {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      font-family: var(--mono);
+      font-weight: 450;
+      font-size: clamp(10px, 0.78vw, 12px);
+      line-height: 1.3;
+      color: #243044;
+      white-space: pre;
+    }
+    .urdf img {
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+      object-fit: contain;
+      object-position: center;
+      border-radius: 6px;
+      background: #d5dee6;
+    }
+    .cell.t1 { background: #e7f4ef; --accent: #0f7a62; }
+    .cell.t2 { background: #e7f0fa; --accent: #1d6f8a; }
+    .cell.t3 { background: #f3eef8; --accent: #6b5b8a; }
+    #film {
+      width: min(1080px, calc(100vw - 72px), calc((100dvh - 188px) * 16 / 9));
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 2px 2px 4px;
+    }
+    #film button {
+      flex: none;
+      width: 148px;
+      aspect-ratio: 16 / 9;
+      height: auto;
+      padding: 8px;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 4px 14px rgba(36, 48, 68, 0.08);
+      cursor: pointer;
+      font: inherit;
+      font-size: 11px;
+      line-height: 1.3;
+      text-align: left;
+      color: var(--ink);
+    }
+    #film button.on { border-color: var(--green); }
+  </style>
+</head>
+<body>
+  <div class="wrap" id="resume">
+    <header class="top">
+      <div>
+        <p class="kicker">이력서</p>
+        <h1>후젠카이</h1>
+        <p class="role">로봇 소프트웨어 수석 연구원</p>
+        <ul class="facts">
+          <li>공학박사</li>
+          <li>로봇 개발 15년</li>
+          <li>한국 영주권</li>
+        </ul>
+        <p class="contact">huzhenkai@naver.com · 010-6381-8803 · 경기도 오산시 원동 · 1982년 · 남</p>
+      </div>
+      <button class="open" type="button" id="open-talk">프로젝트 설명</button>
+    </header>
+
+    <section class="block">
+      <h2>경력</h2>
+
+      <article class="job">
+        <div class="job-head">
+          <h3>트윔</h3>
+          <p class="when">2025.10 – 현재</p>
+        </div>
+        <p class="meta">수석 연구원 · AI ROBOT VISION PART · 연구소</p>
+        <p class="meta">코스닥 상장 머신비전 기술 기업</p>
+
+        <div class="proj">
+          <h4>휠형 샤시 쌍팔 MoMa 로봇 응용 소프트웨어 개발</h4>
+          <ul class="clean">
+            <li>SDK 기반 2차 개발</li>
+            <li>Robot-Edge computer 실시간 통신 zenoh-ros-bridge 개발</li>
+            <li>Architecture 및 프로그램 모듈화 설계</li>
+            <li>Lidar 데이터 기반 장애물 인식과 회피 알고리즘 개발</li>
+            <li>Vision 기반 충전스테이션 복귀 모듈 개발</li>
+            <li>ACT 기반 모방 학습 소프트웨어 모듈 개발</li>
+          </ul>
+        </div>
+        <div class="proj">
+          <h4>4족 보행 로봇 소프트웨어 제어</h4>
+          <ul class="clean">
+            <li>ROS2 기반 4족 보행 로봇 제어 시스템 설계 및 구현</li>
+            <li>slam_toolbox 및 nav2를 활용한 SLAM 및 자율주행 내비게이션 기능 구축</li>
+            <li>LiDAR, 비전 인식 및 음성 인식 기술을 통합한 실내 순찰 서비스 개발</li>
+          </ul>
+        </div>
+        <div class="proj">
+          <h4>알고리즘 검증을 위한 AMR / MoMa 시뮬레이션 환경 구축</h4>
+          <ul class="clean">
+            <li>Gazebo/Mujoco 기반 로봇 시뮬레이션 환경 조성</li>
+            <li>로봇 본체 및 LiDAR, 카메라 등 주요 센서의 URDF 모델링</li>
+            <li>ROS2 ros2_control, nav2, slam_toolbox, Moveit2로 제어</li>
+          </ul>
+        </div>
+        <div class="proj">
+          <h4>로봇 관제 시스템 개발</h4>
+          <ul class="clean">
+            <li>로봇-클라우드-사용자 간 실시간 데이터 통신 파이프라인 구축</li>
+            <li>대용량 로그 및 상태 정보 저장을 위한 클라우드 스토리지 시스템 설계</li>
+            <li>로봇 원격 제어 및 실시간 데이터 시각화(Rendering) 사용자 UI 개발</li>
+          </ul>
+        </div>
+        <div class="proj">
+          <h4>프로젝트 관리</h4>
+          <ul class="clean">
+            <li>Gitlab 사용 소프트웨어 개발 프로세스 관리</li>
+            <li>테스트 플랜 및 테스트 리포트 설계 및 작성</li>
+            <li>SW 설계 및 개발 기술 문서 설계</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="job">
+        <div class="job-head">
+          <h3>트리즈</h3>
+          <p class="when">2024.01 – 2025.05</p>
+        </div>
+        <p class="meta">매니저(팀장) · 상위 SW팀 · Mobility 사업부</p>
+        <p class="meta">자율주행 기술 및 자율주행 자동차 제조회사</p>
+        <div class="proj">
+          <h4>자율주행 차량 모니터링 시스템 개발</h4>
+          <ul class="clean">
+            <li>시장과 관련 기술 분석</li>
+            <li>요구사항, 아키텍처, 관제·상위·하위 입출력 규약, 시험 계획 작성</li>
+            <li>Axure로 모니터링 화면 설계</li>
+            <li>Python으로 통신 모듈, 로깅, 화면 구현</li>
+          </ul>
+        </div>
+        <div class="proj">
+          <h4>자율주행 차량 HW Interface 기술 개발</h4>
+          <ul class="clean">
+            <li>CAN-ROS2 통신 모듈 개발</li>
+            <li>ROS2로 라이다, IMU, GNSS와 구동 모터 제어</li>
+            <li>V2X 원격 제어, 원격 출발·정차·비상 정지 소프트웨어 개발</li>
+            <li>Python으로 구현</li>
+          </ul>
+        </div>
+        <div class="proj">
+          <h4>HD map기술 개발</h4>
+          <ul class="clean">
+            <li>Shape 지도를 OSM 지도로 변환하는 기술 개발</li>
+            <li>Python으로 구현</li>
+          </ul>
+        </div>
+        <div class="proj">
+          <h4>SW 개발 관리</h4>
+          <ul class="clean">
+            <li>사내 GitLab 설치와 운영</li>
+            <li>이슈와 마일스톤으로 개발 과정 관리</li>
+            <li>Git, pytest, Jenkins로 개발 자동화</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="job">
+        <div class="job-head">
+          <h3>퓨처로봇</h3>
+          <p class="when">2018.04 – 2023.03</p>
+        </div>
+        <p class="meta">부연구소장 · SW개발팀</p>
+        <p class="meta">서비스 로봇 개발 및 제조회사</p>
+        <div class="proj">
+          <h4>로봇 시나리오 관리 middleware 개발</h4>
+          <ul class="clean">
+            <li>C#으로 하드웨어와 애플리케이션 사이의 로봇 관리 미들웨어 개발</li>
+            <li>시나리오 자동 배포와 다중 업무의 자동·수동 전환</li>
+            <li>미들웨어와 JSON으로 로컬 로봇과 원격 관리·모니터링 시스템 연결</li>
+            <li>Git으로 개발과 버전 관리</li>
+          </ul>
+        </div>
+        <div class="proj">
+          <h4>다종 안내 로봇 시나리오 UI 개발</h4>
+          <ul class="clean">
+            <li>HTML, CSS, JavaScript로 로봇 콘텐츠 화면 개발</li>
+            <li>반응형 웹과 접근성, 사용 편의성 적용</li>
+            <li>JavaScript와 C# 소켓으로 화면과 로봇 연동</li>
+          </ul>
+        </div>
+        <div class="proj">
+          <h4>AI 장비 제어 기술 개발</h4>
+          <ul class="clean">
+            <li>라즈베리 파이와 Python으로 임베디드 음성 인식 개발</li>
+            <li>음성 인식 API로 로봇 명령 학습과 적용</li>
+            <li>임베디드 스텝 모터 제어</li>
+          </ul>
+        </div>
+        <div class="proj">
+          <h4>로봇에 센서 착용 기술 개발</h4>
+          <ul class="clean">
+            <li>Ubuntu에서 Python과 Qt로 라이다·IMU의 ROS 패키지와 화면 개발</li>
+            <li>Windows에서 C#으로 RS232 기반 IC카드 인식 개발</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="job">
+        <div class="job-head">
+          <h3>서울아산병원 의공학연구소</h3>
+          <p class="when">2015.12 – 2018.03</p>
+        </div>
+        <p class="meta">박사후 연구원</p>
+        <div class="proj">
+          <h4>다종 심혈관 중재 수술로봇 개발</h4>
+          <ul class="clean">
+            <li>부정맥 중재 수술로봇과 관상동맥 중재 수술로봇 개발</li>
+            <li>C++ 로봇 제어, MFC와 Qt 화면 설계</li>
+            <li>UDP 유선·무선 원격 통신, CAN으로 다축 모터와 센서 연동</li>
+            <li>성능 시험과 동물 실험 계획 및 수행</li>
+            <li>시장과 기술 분석</li>
+            <li>제1저자 SCI 논문 1편, 발명 특허 2건 작성 및 등록</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="job">
+        <div class="job-head">
+          <h3>국립암센터 의공학과</h3>
+          <p class="when">2011.03 – 2015.11</p>
+        </div>
+        <p class="meta">연구원 · 수술로봇 기술 연구소</p>
+        <div class="proj">
+          <h4>복강경 수술로봇 개발</h4>
+          <ul class="clean">
+            <li>힘 반향 로봇 핸들 기술 연구</li>
+            <li>Solid Edge로 기구 설계와 최적화, 3D 프린터로 기구 가공</li>
+            <li>C/C++로 Maxon 모터 제어</li>
+            <li>NI-MAX C API로 센서와 로봇 구동</li>
+            <li>제1저자 SCI 논문 1편, 발명 특허 1건 작성 및 등록</li>
+          </ul>
+        </div>
+      </article>
+    </section>
+
+    <section class="block">
+      <h2>학력</h2>
+      <div class="edu">
+        <div><strong>고려대학교</strong><p class="meta">생체의공학 전공 · 공학박사</p></div>
+        <p class="when">2007.03 – 2011.02<br>서울</p>
+      </div>
+      <div class="edu">
+        <div><strong>동북대학교</strong><p class="meta">의공학 전공 · 학사 / 석사</p></div>
+        <p class="when">2000.09 – 2007.02<br>중국</p>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>논문</h2>
+      <div class="paper">Lee H, Hu Z, Moon Y, et al. Design and control of a robotic steering mechanism for electrophysiological catheters. <em>Journal of Mechanisms and Robotics, 2020.</em></div>
+      <div class="paper">Moon Y, Hu Z, Won J, et al. Novel design of master manipulator for robotic catheter system. <em>International Journal of Control, Automation and Systems, 2018.</em></div>
+      <div class="paper">Hu Z, Yoon C H, Park S B, et al. Design of a haptic device with grasp and push–pull force feedback for a master–slave surgical robot. <em>International Journal of Computer Assisted Radiology and Surgery, 2016.</em></div>
+      <div class="paper">Hu Z, Won J, Moon Y, et al. Design of a robotic catheterization platform with use of commercial ablation catheter. <em>Frontiers in Biomedical Devices, ASME, 2017.</em></div>
+      <div class="paper">Hu Z, et al. Design of robotic vascular intervention system. <em>19th Conference on Institute of Control, Robotics and Systems, 2018.</em></div>
+    </section>
+
+    <section class="block">
+      <h2>특허</h2>
+      <div class="paper"><strong>10-2015-0107362</strong> · 2015.07.29<br>무구속 힘 반향 마스터 디바이스 및 이를 포함하는 수술 로봇 시스템</div>
+      <div class="paper"><strong>10-2017-0021831</strong> · 2017.02.17<br>다곡률 카테터 및 수술용 의료장치</div>
+      <div class="paper"><strong>10-2017-0029637</strong> · 2017.03.08<br>카테터 이송 장치</div>
+      <div class="paper"><strong>10-2018-0170209</strong> · 2018.12.27<br>이동 로봇의 주행 평가 방법</div>
+    </section>
+
+    <section class="block">
+      <h2>어학 · 보유 기술</h2>
+      <div class="lang">
+        <div><span>중국어</span><div class="bar" style="--p:100%"></div><span>최상 · 원어민</span></div>
+        <div><span>한국어</span><div class="bar" style="--p:86%"></div><span>상 · 19년 거주</span></div>
+        <div><span>영어</span><div class="bar" style="--p:78%"></div><span>상 · 업무 회화</span></div>
+      </div>
+      <div class="tags" style="margin-top:16px">
+        <span>C</span><span>C++</span><span>C#</span><span>Python</span>
+        <span>ROS2</span><span>Nav2</span><span>ros2_control</span><span>MoveIt2</span>
+        <span>Gazebo</span><span>MuJoCo</span><span>SLAM</span>
+        <span>Qt</span><span>MFC</span><span>HTML / CSS / JavaScript</span>
+        <span>CAN</span><span>UDP</span><span>V2X</span>
+        <span>Git</span><span>GitLab</span><span>Jenkins</span><span>pytest</span>
+        <span>Solid Edge</span>
+      </div>
+    </section>
+  </div>
+
+  <div id="talk" aria-hidden="true">
+    <div class="talk-top">
+      <button class="back" type="button" id="close-talk">이력서</button>
+      <p class="talk-count" id="talk-count"></p>
+    </div>
+    <div id="sheets"></div>
+    <div id="film"></div>
+  </div>
+
+  <script>
+    function cell(text, tone) {
+      return '<div class="cell t' + tone + '"><span class="tick"></span><b>' + text + '</b></div>';
+    }
+    function filled(text, tone, items) {
+      var chips = items.map(function (item) {
+        var credit = item.credit ? '<small class="cite"><a href="' + item.href + '" target="_blank" rel="noopener">출처 ' + item.credit + '</a></small>' : '';
+        if (item.mark) {
+          return '<span class="textonly"><b>' + item.mark + '</b><em>' + item.name + '</em>' + credit + '</span>';
+        }
+        return '<span><img src="' + item.src + '" alt=""><em>' + item.name + '</em>' + credit + '</span>';
+      }).join('');
+      return '<div class="cell t' + tone + ' fill"><span class="tick"></span><b>' + text + '</b><div class="chips n' + items.length + '">' + chips + '</div></div>';
+    }
+    function model(text, tone) {
+      return '<div class="cell t' + tone + ' fill"><span class="tick"></span><b>' + text + '</b><div class="urdf">' +
+        '<div class="block"><img src="images/rviz-amr.jpg" alt="RViz"><small class="cite"><a href="https://github.com/linorobot/linorobot2/blob/jazzy/docs/assets/linorobot2.gif" target="_blank" rel="noopener">출처 linorobot2</a></small></div>' +
+        '<div class="block"><img src="images/mujoco-moma.jpg" alt="MuJoCo"><small class="cite"><a href="https://raw.githubusercontent.com/google-deepmind/mujoco_menagerie/main/google_robot/robot.png" target="_blank" rel="noopener">출처 MuJoCo Menagerie</a></small></div>' +
+        '</div></div>';
+    }
+    function video(id) {
+      return '<div class="video"><iframe src="https://www.youtube.com/embed/' + id + '" title="트윔 공식 유튜브" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>';
+    }
+    function page(title, bodyClass, inner) {
+      return '<p class="kicker">트윔 · 2025.10 – 현재</p><h2>' + title + '</h2><div class="sheet-body ' + bodyClass + '">' + inner + '</div>';
+    }
+
+    var projects = [
+      {
+        title: "MoMa Control",
+        html: page("휠형 샤시 쌍팔 MoMa 로봇 응용 소프트웨어 개발", "moma",
+          video("2kFP_F4TmIU") +
+          cell("SDK 기반 2차 개발", 1) +
+          cell("Robot-Edge computer 실시간 통신 zenoh-ros-bridge 개발", 2) +
+          cell("Architecture 및 프로그램 모듈화 설계", 3) +
+          cell("Lidar 데이터 기반 장애물 인식과 회피 알고리즘 개발", 1) +
+          cell("Vision 기반 충전스테이션 복귀 모듈 개발", 2) +
+          cell("ACT 기반 모방 학습 소프트웨어 모듈 개발", 3))
+      },
+      {
+        title: "Ros and Simulation",
+        html: page("알고리즘 검증을 위한 AMR / MoMa 시뮬레이션 환경 구축", "sim",
+          filled("Gazebo/Mujoco 기반<br>로봇 시뮬레이션 환경 조성", 1, [
+            { name: "Gazebo", src: "images/gazebo.svg" },
+            { name: "MuJoCo", src: "images/mujoco.png" }
+          ]) +
+          model("로봇 본체 및 LiDAR, 카메라 등<br>주요 센서의 URDF · MJCF 모델링", 2) +
+          filled("ROS2 ros2_control, nav2, slam_toolbox, Moveit2로 제어", 3, [
+            { name: "ros2_control", src: "images/ros2_control.png" },
+            { name: "nav2", src: "images/nav2.png" },
+            { name: "slam_toolbox", mark: "Slam<br>Toolbox" },
+            { name: "MoveIt2", src: "images/moveit.png" }
+          ]))
+      },
+      {
+        title: "Monitoring System",
+        html: page("로봇 관제 시스템 개발", "ctrl",
+          video("q_jalhFB6f4") +
+          cell("로봇-클라우드-사용자 간 실시간 데이터 통신 파이프라인 구축", 1) +
+          cell("대용량 로그 및 상태 정보 저장을 위한 클라우드 스토리지 시스템 설계", 2) +
+          cell("로봇 원격 제어 및 실시간 데이터 시각화(Rendering) 사용자 UI 개발", 3))
+      }
+    ];
+
+    var index = 0;
+    var film = document.getElementById("film");
+    var sheets = document.getElementById("sheets");
+
+    projects.forEach(function (project, i) {
+      var button = document.createElement("button");
+      button.type = "button";
+      button.textContent = project.title;
+      button.addEventListener("click", function () { show(i); });
+      film.appendChild(button);
+    });
+
+    function show(n) {
+      index = Math.max(0, Math.min(projects.length - 1, n));
+      sheets.innerHTML = "";
+      var sheet = document.createElement("article");
+      sheet.className = "sheet";
+      sheet.innerHTML = projects[index].html;
+      sheets.appendChild(sheet);
+      document.getElementById("talk-count").textContent = (index + 1) + " / " + projects.length;
+      film.querySelectorAll("button").forEach(function (button, i) {
+        button.classList.toggle("on", i === index);
+      });
+    }
+
+    function openTalk() {
+      document.body.classList.add("talking");
+      document.getElementById("talk").setAttribute("aria-hidden", "false");
+      show(0);
+    }
+    function closeTalk() {
+      document.body.classList.remove("talking");
+      document.getElementById("talk").setAttribute("aria-hidden", "true");
+      sheets.innerHTML = "";
+    }
+
+    document.getElementById("open-talk").addEventListener("click", openTalk);
+    document.getElementById("close-talk").addEventListener("click", closeTalk);
+    document.addEventListener("keydown", function (event) {
+      if (!document.body.classList.contains("talking")) return;
+      if (event.key === "Escape") closeTalk();
+      if (event.key === "ArrowRight") show(index + 1);
+      if (event.key === "ArrowLeft") show(index - 1);
+    });
+  </script>
+</body>
+</html>
