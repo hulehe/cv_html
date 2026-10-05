@@ -268,6 +268,7 @@
       font-weight: 700;
     }
     .sheet-body.poc .techs { grid-row: 3; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .sheet-body.poc .techs.n4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
     .sheet-body.poc .tech {
       align-items: center;
       justify-content: flex-start;
@@ -486,7 +487,7 @@
         <p class="meta">매니저(팀장) · 상위 SW팀 · Mobility 사업부</p>
         <p class="meta">자율주행 기술 및 자율주행 자동차 제조회사</p>
         <div class="proj">
-          <h4>자율주행 차량 모니터링 시스템 개발</h4>
+          <h4>자체 개발 자율주행차 모니터링 시스템 개발</h4>
           <ul class="clean">
             <li>시장과 관련 기술 분석</li>
             <li>요구사항, 아키텍처, 관제·상위·하위 입출력 규약, 시험 계획 작성</li>
@@ -495,7 +496,7 @@
           </ul>
         </div>
         <div class="proj">
-          <h4>자율주행 차량 HW Interface 기술 개발</h4>
+          <h4>실물 전기차 자율주행 개조 HW Interface 기술 개발</h4>
           <ul class="clean">
             <li>CAN-ROS2 통신 모듈 개발</li>
             <li>ROS2로 라이다, IMU, GNSS와 구동 모터 제어</li>
@@ -676,8 +677,8 @@
     function tech(src, text, tone) {
       return '<div class="cell t' + tone + ' tech"><img src="' + src + '" alt=""><b>' + text + '</b></div>';
     }
-    function page(title, bodyClass, inner) {
-      return '<p class="kicker">트윔 · 2025.10 – 현재</p><h2>' + title + '</h2><div class="sheet-body ' + bodyClass + '">' + inner + '</div>';
+    function page(title, bodyClass, inner, kicker) {
+      return '<p class="kicker">' + (kicker || "트윔 · 2025.10 – 현재") + '</p><h2>' + title + '</h2><div class="sheet-body ' + bodyClass + '">' + inner + '</div>';
     }
 
     var projects = [
@@ -735,6 +736,41 @@
             { name: "slam_toolbox", mark: "Slam<br>Toolbox" },
             { name: "MoveIt2", src: "images/moveit.png" }
           ]))
+      },
+      {
+        title: "Vehicle Monitor",
+        html: page("자체 개발 자율주행차 모니터링 시스템", "poc",
+          '<div class="diagram"><img src="images/monitor-schematic.svg" alt="모니터링 화면 예시"><small class="cite">모니터링 화면 예시</small></div>' +
+          '<div class="outcomes">' +
+            cell("모니터링 시스템 구현", 1) +
+            cell("차량 상태 실시간 확인", 2) +
+            cell("운행 기록 확인", 3) +
+          '</div>' +
+          '<p class="apply"><b>↑</b> 위 과제에 적용</p>' +
+          '<div class="techs n4">' +
+            tech("images/tech-axure.svg", "Axure<br>화면 설계", 1) +
+            tech("images/tech-screen.svg", "PyQt<br>화면 구현", 2) +
+            tech("images/tech-comm.svg", "TCP · UDP<br>통신", 3) +
+            tech("images/tech-log.svg", "로깅<br>기록 · 추적", 1) +
+          '</div>', "트리즈 · 2024.01 – 2025.05")
+      },
+      {
+        title: "HW Interface",
+        html: page("실물 전기차 자율주행 개조 HW Interface", "poc",
+          '<div class="diagram"><img src="images/hw-schematic.svg" alt="차량 HW 구조 예시"><small class="cite">차량 HW 구조 예시</small></div>' +
+          '<div class="outcomes">' +
+            cell("차량 HW Interface 구축", 1) +
+            cell("센서 · 구동 모터 연동", 2) +
+            cell("원격 출발 · 정차 · 비상 정지", 3) +
+          '</div>' +
+          '<p class="apply"><b>↑</b> 위 과제에 적용</p>' +
+          '<div class="techs">' +
+            tech("images/tech-can.svg", "Python<br>CAN-ROS2 통신", 1) +
+            tech("images/tech-ld.svg", "ROS2<br>LiDAR 연동", 2) +
+            tech("images/tech-imu.svg", "ROS2<br>IMU · GNSS", 3) +
+            tech("images/tech-motor.svg", "ROS2<br>구동 모터 제어", 1) +
+            tech("images/tech-v2x.svg", "V2X<br>원격 제어", 2) +
+          '</div>', "트리즈 · 2024.01 – 2025.05")
       }
     ];
 
