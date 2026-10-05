@@ -383,57 +383,6 @@
       color: #5c6b7a;
     }
     .cite a { color: #1d6f8a; text-decoration: underline; }
-    .urdf {
-      flex: 1;
-      min-height: 0;
-      margin-top: 4px;
-      background: rgba(255,255,255,0.78);
-      border-radius: 10px;
-      padding: 12px 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      overflow: hidden;
-    }
-    .urdf .block {
-      flex: 1;
-      min-height: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      overflow: hidden;
-    }
-    .urdf .block em {
-      font-style: normal;
-      font-family: var(--mono);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      color: #1d6f8a;
-    }
-    .urdf .src {
-      flex: 1;
-      min-height: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      overflow: hidden;
-      font-family: var(--mono);
-      font-weight: 450;
-      font-size: clamp(10px, 0.78vw, 12px);
-      line-height: 1.3;
-      color: #243044;
-      white-space: pre;
-    }
-    .urdf img {
-      flex: 1;
-      min-height: 0;
-      width: 100%;
-      object-fit: contain;
-      object-position: center;
-      border-radius: 6px;
-      background: #d5dee6;
-    }
     .cell.t1 { background: #e7f4ef; --accent: #0f7a62; }
     .cell.t2 { background: #e7f0fa; --accent: #1d6f8a; }
     .cell.t3 { background: #f3eef8; --accent: #6b5b8a; }
@@ -721,12 +670,6 @@
       }).join('');
       return '<div class="cell t' + tone + ' fill"><span class="tick"></span><b>' + text + '</b><div class="chips n' + items.length + '">' + chips + '</div></div>';
     }
-    function model(text, tone) {
-      return '<div class="cell t' + tone + ' fill"><span class="tick"></span><b>' + text + '</b><div class="urdf">' +
-        '<div class="block"><img src="images/rviz-amr.jpg" alt="RViz"><small class="cite"><a href="https://github.com/linorobot/linorobot2/blob/jazzy/docs/assets/linorobot2.gif" target="_blank" rel="noopener">출처 linorobot2</a></small></div>' +
-        '<div class="block"><img src="images/mujoco-moma.jpg" alt="MuJoCo"><small class="cite"><a href="https://raw.githubusercontent.com/google-deepmind/mujoco_menagerie/main/google_robot/robot.png" target="_blank" rel="noopener">출처 MuJoCo Menagerie</a></small></div>' +
-        '</div></div>';
-    }
     function video(id) {
       return '<div class="video"><iframe src="https://www.youtube.com/embed/' + id + '" title="트윔 공식 유튜브" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>';
     }
@@ -758,9 +701,21 @@
       },
       {
         title: "Robot Dog",
-        html: page("4족 보행 로봇 순찰", "pair",
-          cell("4족 보행 로봇 제어", 1) +
-          cell("실내 순찰", 2))
+        html: page("4족 보행 로봇 실내 순찰", "poc",
+          '<div class="diagram"><img src="images/dog-schematic.png" alt="4족 보행 로봇 구조 예시"><small class="cite">4족 보행 로봇 구조 예시</small></div>' +
+          '<div class="outcomes">' +
+            cell("실내 순찰 서비스 구현", 1) +
+            cell("4족 보행 로봇 주행 제어", 2) +
+            cell("GUI로 제어하고 로봇 상태 확인", 3) +
+          '</div>' +
+          '<p class="apply"><b>↑</b> 위 과제에 적용</p>' +
+          '<div class="techs">' +
+            tech("images/tech-slam.svg", "slam_toolbox<br>지도 작성 · 위치 추정", 1) +
+            tech("images/tech-nav.svg", "nav2<br>자율 주행", 2) +
+            tech("images/tech-voice.svg", "음성 인식<br>순찰 명령 적용", 3) +
+            tech("images/tech-see.svg", "Vision<br>순찰 대상 인식", 1) +
+            tech("images/tech-gui.svg", "실시간 통신<br>명령 · 상태 전달", 2) +
+          '</div>')
       },
       {
         title: "ROS2 Simulation",
@@ -769,8 +724,12 @@
             { name: "Gazebo", src: "images/gazebo.svg" },
             { name: "MuJoCo", src: "images/mujoco.png" }
           ]) +
-          model("로봇 본체 및 LiDAR, 카메라 등<br>주요 센서의 URDF · MJCF 모델링", 2) +
-          filled("ros2_control · nav2 · slam_toolbox · MoveIt2 검증<br>4족 순찰은 slam_toolbox · nav2", 3, [
+          filled("로봇 본체 및 LiDAR, 카메라 등<br>주요 센서의 URDF · MJCF 모델링", 2, [
+            { name: "본체", src: "images/model-body.svg" },
+            { name: "LiDAR", src: "images/model-lidar.svg" },
+            { name: "카메라", src: "images/model-camera.svg" }
+          ]) +
+          filled("ros2_control · nav2 · slam_toolbox · MoveIt2 검증", 3, [
             { name: "ros2_control", src: "images/ros2_control.png" },
             { name: "nav2", src: "images/nav2.png" },
             { name: "slam_toolbox", mark: "Slam<br>Toolbox" },
