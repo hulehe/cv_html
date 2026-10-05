@@ -270,6 +270,7 @@
     .sheet-body.poc .techs { grid-row: 3; grid-template-columns: repeat(5, minmax(0, 1fr)); }
     .sheet-body.poc .techs.n4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
     .sheet-body.poc .techs.n3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .sheet-body.poc.fig { grid-template-columns: 1.45fr 1fr 1fr 1fr; }
     .sheet-body.poc .tech {
       align-items: center;
       justify-content: flex-start;
@@ -788,6 +789,22 @@
             tech("images/tech-ws.svg", "WebSocket<br>화면 · 제어 통신", 2) +
             tech("images/tech-cs.svg", "Windows C#<br>로봇 제어", 3) +
           '</div>', "퓨처로봇 · 2018.04 – 2023.03")
+      },
+      {
+        title: "Cath System",
+        html: page("심혈관 중재 로봇 시스템", "poc fig",
+          '<div class="diagram"><img src="images/master-photo.png" alt="Fig. 2 Prototype of the master manipulator"><small class="cite" style="width:100%;text-align:center">Fig. 2 · Moon Y, Hu Z, Won J, et al.<br><a href="https://doi.org/10.1007/s12555-018-0089-7" target="_blank" rel="noopener">Int. J. Control Autom. Syst., 2018</a></small><img src="images/asme-fig5.png" alt="Fig. 5 Prototype of the catheterization platform"><small class="cite" style="width:100%;text-align:center">Fig. 5 · Hu Z, Won J, Moon Y, et al.<br><a href="https://doi.org/10.1115/DMD2017-3347" target="_blank" rel="noopener">Frontiers in Biomedical Devices, ASME, 2017</a></small></div>' +
+          '<div class="outcomes">' +
+            cell("부정맥 절제용<br>카테터 시스템", 1) +
+            cell("관상동맥 스텐트용<br>카테터 시스템", 2) +
+            '<div class="cell t3"><span class="tick"></span><b>돼지 관상동맥<br>동물 실험</b><small class="cite"><a href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE07449818" target="_blank" rel="noopener">Hu Z, et al. ICROS, 2018</a></small></div>' +
+          '</div>' +
+          '<p class="apply"><b>↑</b> 위 과제에 적용</p>' +
+          '<div class="techs n3">' +
+            tech("images/tech-comm.svg", "UDP<br>실시간 통신", 1) +
+            tech("images/tech-oop.svg", "C++ OOP<br>제어 소프트웨어", 2) +
+            tech("images/tech-can.svg", "CAN<br>다축 모터", 3) +
+          '</div>', "서울아산병원 · 2015.12 – 2018.03")
       }
     ];
 
