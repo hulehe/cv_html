@@ -269,6 +269,7 @@
     }
     .sheet-body.poc .techs { grid-row: 3; grid-template-columns: repeat(5, minmax(0, 1fr)); }
     .sheet-body.poc .techs.n4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .sheet-body.poc .techs.n3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .sheet-body.poc .tech {
       align-items: center;
       justify-content: flex-start;
@@ -771,6 +772,22 @@
             tech("images/tech-motor.svg", "ROS2<br>구동 모터 제어", 1) +
             tech("images/tech-v2x.svg", "V2X<br>원격 제어", 2) +
           '</div>', "트리즈 · 2024.01 – 2025.05")
+      },
+      {
+        title: "Screen AMR",
+        html: page("자체 개발 화면형 다종 서비스 AMR", "poc",
+          '<div class="diagram"><img src="images/amr-schematic.svg" alt="화면형 AMR 구조 예시"><small class="cite">화면형 AMR 구조 예시</small></div>' +
+          '<div class="outcomes">' +
+            cell("순찰 로봇", 1) +
+            cell("안내 로봇", 2) +
+            cell("소독 로봇", 3) +
+          '</div>' +
+          '<p class="apply"><b>↑</b> 위 과제에 적용</p>' +
+          '<div class="techs n3">' +
+            tech("images/tech-web.svg", "HTML · CSS · JS<br>웹 화면", 1) +
+            tech("images/tech-ws.svg", "WebSocket<br>화면 · 제어 통신", 2) +
+            tech("images/tech-cs.svg", "Windows C#<br>로봇 제어", 3) +
+          '</div>', "퓨처로봇 · 2018.04 – 2023.03")
       }
     ];
 
